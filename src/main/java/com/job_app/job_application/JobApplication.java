@@ -1,5 +1,6 @@
 package com.job_app.job_application;
 
+import com.job_app.job_application.Job.Job;
 import com.job_app.job_application.Job.JobController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +12,7 @@ public class JobApplication {
 
 
         SpringApplication.run(JobApplication.class, args);
-        JobController jobController = new JobController();
-        jobController.findJobs();
+
     }
 
 }

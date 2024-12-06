@@ -1,9 +1,6 @@
 package com.job_app.job_application.Job;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +8,33 @@ import java.util.List;
 @RestController
 public class JobController {
 
-    private List<Job> jobs = new ArrayList<>();
+    private final JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @GetMapping("/jobs")
     public List<Job> findJobs() {
-        return jobs;
+        return jobService.findJobs();
     }
 
     @PostMapping("/jobs")
-    public String addJob(@RequestBody Job job) {
-        jobs.add(job);
+    public String createJob(@RequestBody Job job) {
+        jobService.createJob(job);
         return "job added successfully";
     }
+
+    @GetMapping("/jobs/{id}")
+    public Job findJobById(@PathVariable Long id) {
+        if(jobService.findJobById(id) != null) {
+            return jobService.findJobById(id);
+        }
+        else{
+            return new Job("job not found",0L,0L,"job not found",0L,"none");
+        }
+
+    }
+
 }
+
